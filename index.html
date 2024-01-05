@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пример Видеохостинга</title>
+    <style>
+        /* Ваши стили остаются без изменений */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            color: #ff0000; /* Красный цвет */
+            margin: 0;
+        }
+
+        .account-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #3498db; /* Цвет иконки аккаунта (можно изменить) */
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .video-info {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-info h2 {
+            color: #333;
+        }
+
+        .video-info p {
+            color: #666;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn {
+            border: 2px solid gray;
+            color: gray;
+            background-color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 70%;
+        }
+
+        .search-btn {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #3498db; /* Цвет обводки кнопки (можно изменить) */
+            border-radius: 5px;
+            background-color: #3498db; /* Цвет кнопки (можно изменить) */
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .interaction-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .interaction-buttons button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #3498db; /* Цвет обводки кнопки (можно изменить) */
+            border-radius: 5px;
+            background-color: #3498db; /* Цвет кнопки (можно изменить) */
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .interaction-buttons button:hover {
+            background-color: #2980b9; /* Темно-синий цвет при наведении */
+        }
+
+        .comment-section {
+            margin-top: 20px;
+        }
+
+        .comment-section textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .comment-section button {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #3498db; /* Цвет обводки кнопки (можно изменить) */
+            border-radius: 5px;
+            background-color: #3498db; /* Цвет кнопки (можно изменить) */
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .comment-section button:hover {
+            background-color: #2980b9; /* Темно-синий цвет при наведении */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Мой Видеохостинг</h1>
+        <div class="account-icon"></div> <!-- Иконка аккаунта -->
+    </header>
+    <main>
+        <div class="upload-btn-wrapper">
+            <button class="btn">Загрузить видео</button>
+            <input type="file" name="uploadVideo" accept="video/*" onchange="loadVideo()">
+        </div>
+
+        <video id="myVideo" controls onkeydown="handleKeyPress(event)">
+            <source src="D:\Альберт\Videos\💲💲💲КТО ХОЧЕТ СТАТЬ МИЛЛИОНЕРОМ В МАЙНКРАФТЕ   PepeLand 8 День 96 ФАЗА 6 ПРОЕКТЫ   !сервер.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-info">
+            <h2>Название видео</h2>
+            <p>Описание видео Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="interaction-buttons">
+            <button onclick="likeVideo()">👍 Нравится</button>
+            <button onclick="dislikeVideo()">👎 Не нравится</button>
+            <button onclick="subscribeChannel()">Подписаться</button>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Поиск видео">
+            <button class="search-btn">Поиск</button>
+        </div>
+
+        <div class="comment-section">
+            <button onclick="openCommentSection()">Написать комментарий</button>
+            <div id="commentSection" style="display: none;">
+                <textarea id="commentText" placeholder="Добавить комментарий"></textarea>
+                <button onclick="addComment()">Добавить комментарий</button>
+            </div>
+        </div>
+
+        <script>
+            function loadVideo() {
+                var uploadVideo = document.querySelector('input[name="uploadVideo"]');
+                var video = document.getElementById('myVideo');
+                var source = document.createElement('source');
+                source.src = URL.createObjectURL(uploadVideo.files[0]);
+                source.type = 'video/mp4';
+                video.innerHTML = '';
+                video.appendChild(source);
+            }
+
+            function openCommentSection() {
+                var commentSection = document.getElementById('commentSection');
+                commentSection.style.display = 'block';
+            }
+
+            // Остальные функции остаются без изменений
+
+            function addComment() {
+                var commentText = document.getElementById('commentText').value;
+                var commentsList = document.getElementById('commentsList');
+                var commentItem = document.createElement('li');
+                commentItem.innerText = commentText;
+                commentsList.appendChild(commentItem);
+            }
+
+            function likeVideo() {
+                alert('Лайк поставлен!');
+            }
+
+            function dislikeVideo() {
+                alert('Дизлайк поставлен!');
+            }
+
+            function subscribeChannel() {
+                alert('Вы подписались на канал!');
+            }
+        </script>
+    </main>
+    <footer class="footer">
+        &copy; 2024 Мой Видеохостинг
+    </footer>
+</body>
+</html>
